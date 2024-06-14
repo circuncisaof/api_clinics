@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
 import { UserEntity } from './users/entities/user.entitie';
 import { UsersModule } from './users/user.module';
 
@@ -11,6 +12,7 @@ import { UsersModule } from './users/user.module';
       isGlobal: true,
     }),
     UsersModule,
+    AuthModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
