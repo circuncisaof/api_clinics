@@ -1,12 +1,12 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
+import { ReturnUser } from 'src/users/dtos/returns/returns_users.dto';
 import { UserEntity } from 'src/users/entities/user.entitie';
 import { Repository } from 'typeorm';
 import { AuthDto } from './dto/auth.dto';
 import { LoginPayload } from './dto/login-payload.dto';
-import { JwtService } from '@nestjs/jwt';
-import { ReturnUser } from 'src/users/dtos/returns/returns_users.dto';
 @Injectable()
 export class AuthService {
   constructor(
@@ -32,5 +32,12 @@ export class AuthService {
       }),
       user: new ReturnUser(user),
     };
+  }
+
+  async checkToken(token: string) {
+    return this.jwtService.verify(token, {
+      audience: 'users',
+      issuer: 'login',
+    });
   }
 }
