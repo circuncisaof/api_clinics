@@ -6,14 +6,18 @@ import {
   Param,
   Patch,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { UpdatePathUser } from './dtos/update_patch_users.dto';
 import { UpdatePutUserDto } from './dtos/update_put_users.dto';
 import { UserService } from './user.service';
+import { Guard } from 'src/guards/auth_guards.module';
 
 @Controller('user')
 export class UserController {
   constructor(private user_service: UserService) {}
+
+  @UseGuards(Guard)
   @Get()
   async get_all_user() {
     return this.user_service.all_user();
